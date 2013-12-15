@@ -1,0 +1,67 @@
+﻿@using Forum.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Pikeman Forum</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Styles.Render("~/Content/kendo")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/kendo")
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    @RenderSection("HeadContent", required: false)
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Pikeman Forum", "Index", "Home", new { area = "" }, new { @class = "brand" })
+                <div class="nav-collapse collapse">
+                    <ul class="nav" id="kendoMenu">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Create new post", "CreatePost", "Posts", new { area = "" }, null)</li>
+                        }
+                        <li>@Html.ActionLink("Tags", "Tags", "Tags", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Users", "Users", "Users", new { area = "" }, null)</li>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li>
+                                Administration
+                                <ul>
+                                    <li>@Html.ActionLink("Edit categories", "Index", "Category", new { area = "Administration" }, null)</li>
+                                    <li>@Html.ActionLink("Edit Tags", "Index", "Tag", new { area = "Administration" }, null)</li>
+                                    <li>@Html.ActionLink("Edit Users", "Index", "UserAdministration", new { area = "Administration" }, null)</li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @RenderBody()
+        <footer class="span12">
+            <hr />
+            <p>&copy; @DateTime.Now.Year - Pikeman Forum</p>
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        $("#kendoMenu").kendoMenu();
+    </script>
+</body>
+</html>

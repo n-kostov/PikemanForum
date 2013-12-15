@@ -1,0 +1,13 @@
+﻿@using System.Web.UI.WebControls
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<Forum.ViewModels.PostCategoryUserViewModel>
+
+@{
+    ViewBag.Title = "Search results";
+    string searchString = ViewBag.SearchString;
+}
+<h2>@ViewBag.Title for "@Html.Raw(searchString)"</h2>
+
+@Html.Partial("_HomePage")
+@Html.PagedListPager(Model, page => Url.Action("Search", "Home", new { searchString = searchString, page = page }), new PagedListRenderOptions { DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayItemSliceAndTotal = true, UlElementClasses = new[] { "nav" }, ContainerDivClasses = new[] { "navbar clearfix" } })

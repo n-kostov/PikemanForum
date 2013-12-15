@@ -1,0 +1,19 @@
+﻿@using Forum.ViewModels
+@using System.Collections
+@model UserViewModel
+
+@{
+    ViewBag.Title = "Edit roles";
+}
+<p>
+    @Model.UserName
+</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id);
+    @(Html.Kendo().MultiSelectFor(model => model.Roles)
+        .BindTo(ViewData["roles"] as string[])
+        .Value(Model.Roles))
+    <input type="submit" value="Save" />
+}

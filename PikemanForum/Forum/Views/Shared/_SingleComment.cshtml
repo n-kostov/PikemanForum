@@ -1,0 +1,6 @@
+﻿@model Forum.Models.Comment
+<blockquote class="commentInPost">
+    <p>
+        @Model.Content
+    </p> <small>Commented by: @(string.Format("{0} {1}", Model.User.UserName, Model.Timespan.ToString("<HH:mm> <dd/MM/yyyy>")))</small>
+</blockquote>

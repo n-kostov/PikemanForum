@@ -1,0 +1,20 @@
+﻿@*@model int?
+    @{
+        int a = Model.Value;
+        ViewBag.proba = Model.Value;
+    }*@
+@*@using (Html.BeginForm("WriteComment", "Posts", new {id = Model.Value.ToString()}, FormMethod.Post))
+    {
+        @Html.Label("Write Comment")
+
+        @Html.TextArea("content")
+
+        <input value="Post" type="submit">
+    }*@
+@model Forum.Models.Comment
+@using (Ajax.BeginForm("WriteComment", "Posts", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "comments" }))
+{
+    @Html.HiddenFor(model => model.Post.Id)
+    @Html.TextAreaFor(model => model.Content)
+    <input type="submit" value="Comment" />
+}

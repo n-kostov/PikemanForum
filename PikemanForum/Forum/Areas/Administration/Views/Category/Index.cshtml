@@ -1,0 +1,24 @@
+﻿@using Forum.ViewModels
+@{
+    ViewBag.Title = "Categories administration";
+}
+
+@(Html.Kendo().Grid<CategoryViewModel>()
+    .Name("categories-grid")
+    .Columns(columns =>
+        {
+            columns.Bound(col => col.CategoryName);
+            columns.Command(command => { command.Edit(); command.Destroy(); });
+        })
+    .ToolBar(toolbar => { toolbar.Create(); })
+    .Editable(conf => conf.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .DataSource(source =>
+        source.Ajax()
+        .PageSize(5)
+        .Model(model => model.Id(x => x.CategoryId))
+        .Read(read => read.Action("Read", "Category"))
+        .Update(update => update.Action("Edit", "Category"))
+        .Create(create => create.Action("Create", "Category"))
+        .Destroy(destroy => destroy.Action("Delete", "Category"))))

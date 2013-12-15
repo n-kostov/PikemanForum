@@ -1,0 +1,23 @@
+﻿@using System.Web.UI.WebControls
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<Forum.ViewModels.PostCategoryUserViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span9" id="update-ajax">
+            @Html.Partial("_HomePagePosts")
+            @Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page = page }), new PagedListRenderOptions { DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayItemSliceAndTotal = true, UlElementClasses = new[] { "nav" }, ContainerDivClasses = new[] { "navbar clearfix" } })
+        </div>
+        <div class="span3">
+            @Html.Partial("_SearchForm")
+            @Html.Action("ListCategories", "Home")
+        </div>
+    </div>
+</div>

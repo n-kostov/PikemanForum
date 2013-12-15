@@ -1,0 +1,16 @@
+﻿
+@Html.Partial("_SearchForm")
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span9" id="update-ajax">
+
+            @Html.Partial("_HomePagePosts")
+
+        </div>
+
+        <div class="span3">
+            @Html.Action("ListCategories", "Home")
+        </div>
+    </div>
+</div>

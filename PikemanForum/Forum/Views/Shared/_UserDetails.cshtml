@@ -1,0 +1,53 @@
+﻿@using System.Web.UI.WebControls
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<Forum.ViewModels.PostCategoryUserViewModel>
+@{
+    var user = ViewBag.CurrentUser;
+}
+
+@Html.Partial("_SearchForm")
+
+<div class="span10 hero-unit ">
+    <div class="span3">
+        <img src="@user.PhotoUrl" alt="User Avatar" style="height: 150px;" /><br />
+        <div style="padding-left: 50px;">Photo</div>
+    </div>
+    <div class="span6">
+        <table class="table-hover">
+            <tr>
+                <td class="span3">Name: </td>
+                <td class="span3">@user.FirstName @user.LastName</td>
+            </tr>
+            <tr>
+                <td class="span3">Username: </td>
+                <td class="span3">@user.UserName</td>
+            </tr>
+            <tr>
+                <td class="span3">Email: </td>
+                <td class="span3">@user.Email</td>
+            </tr>
+            <tr>
+                <td class="span3">Number of posts: </td>
+                <td class="span3">@user.Posts.Count</td>
+            </tr>
+            <tr>
+                <td class="span3">Number of comments: </td>
+                <td class="span3">@user.Comments.Count</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<h3>Posts by: @user.FirstName @user.LastName</h3>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span9" id="update-ajax">
+            @Html.Partial("_HomePagePosts", Model)
+            @Html.PagedListPager(Model, page => Url.Action("Details", "Users", new { page = page }), new PagedListRenderOptions { DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayItemSliceAndTotal = true, UlElementClasses = new[] { "nav" }, ContainerDivClasses = new[] { "navbar clearfix" } })
+        </div>
+        <div class="span3">
+            @Html.Action("ListCategories", "Home");
+        </div>
+    </div>
+</div>

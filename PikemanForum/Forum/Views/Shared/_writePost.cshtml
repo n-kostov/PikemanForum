@@ -1,0 +1,48 @@
+﻿@model Forum.Models.Post
+
+@{
+    ViewBag.Title = "Create new post";
+}
+
+
+@using (Html.BeginForm("CreatePost", "Posts", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="form-horizontal">
+        <legend>@ViewBag.Title</legend>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Content, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextAreaFor(model => model.Content)
+                @Html.ValidationMessageFor(model => model.Content, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Category, new { @class = "control-label" })
+            <div class="controls">
+                @(Html.Kendo().DropDownListFor(model => model.Category.Id).BindTo((IEnumerable<SelectListItem>)ViewBag.Categories).OptionLabel("--Select a category--"))
+                @Html.ValidationMessageFor(model => model.Category.Id, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Create" class="btn" />
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home", null, new { @class = "btn" })
+</div>

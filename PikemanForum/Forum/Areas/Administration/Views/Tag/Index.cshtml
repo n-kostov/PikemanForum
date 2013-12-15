@@ -1,0 +1,24 @@
+﻿@using Forum.ViewModels
+@{
+    ViewBag.Title = "Tags administration";
+}
+
+@(Html.Kendo().Grid<TagViewModel>()
+    .Name("tags-grid")
+    .Columns(columns =>
+        {
+            columns.Bound(col => col.TagName);
+            columns.Command(command => { command.Edit(); command.Destroy(); });
+        })
+    .ToolBar(toolbar => { toolbar.Create(); })
+    .Editable(conf => conf.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .DataSource(source =>
+        source.Ajax()
+        .PageSize(5)
+        .Model(model => model.Id(x => x.TagId))
+        .Read(read => read.Action("Read", "Tag"))
+        .Update(update => update.Action("Edit", "Tag"))
+        .Create(create => create.Action("Create", "Tag"))
+        .Destroy(destroy => destroy.Action("Delete", "Tag"))))

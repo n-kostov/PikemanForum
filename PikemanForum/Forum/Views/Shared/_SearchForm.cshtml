@@ -1,0 +1,18 @@
+﻿
+
+<div>
+    <div class="search-button">
+        <div class="form-search">
+            <div class="input-append">
+                @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                {
+                    <p>
+                        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "span3 search-query" })
+                        <input type="submit" value="Search" class="btn" />
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

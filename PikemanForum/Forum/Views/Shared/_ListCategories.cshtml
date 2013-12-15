@@ -1,0 +1,11 @@
+﻿@model System.Collections.Generic.List<Forum.Models.Category>
+
+<ul class="nav nav-list sidebar-categories">
+    <li class="nav-header list-header">
+        Categories
+    </li>
+    @foreach (var category in Model)
+    {
+        <li>@Html.ActionLink(@category.Name, "CategoryPosts", "Categories", new { categoryId = category.Id }, null)</li>
+    }
+</ul>

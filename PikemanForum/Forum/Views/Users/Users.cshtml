@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<div class="container-fluid span9">
+    @(Html.Kendo().ListView<Forum.ViewModels.UsersListViewModel>()
+    .Name("usersList")
+    .TagName("div")
+    .HtmlAttributes(new { })
+    .ClientTemplateId("users-template")
+    .Pageable()
+    .DataSource(data =>
+    {
+        data.Read("GetUsers", "Users");
+        data.ServerOperation(true);
+        data.PageSize(3);
+    })
+    )
+</div>
+
+<script id="users-template" type="text/x-kendo-template">
+    <div class="row-fluid">
+        <div class="span2">
+            <img src="#: PhotoUrl #" />
+        </div>
+        <div class="span6">
+            <h3>&nbsp;#: FirstName # #: LastName #</h3>
+            <p>Username: #: UserName #</p>
+            <p>E-mail: #: Email #</p>
+        </div>
+        <div class="span1">
+            <h3>#: PostCount #</h3>
+        </div>
+        <div class="span2">
+            <div><a href="/Users/Details/#: UserName #" class="btn" style="vertical-align: central">More details...</a></div>
+        </div>
+    </div>
+    <br />
+</script>

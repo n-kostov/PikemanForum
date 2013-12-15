@@ -1,0 +1,28 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<Forum.ViewModels.PostCategoryUserViewModel>
+
+@foreach (var post in Model)
+{
+    <div class="postInPostAndComments" style="overflow: auto">
+        <div class="span2" style="margin: 20px 20px 20px 0">
+            <img src="@post.Creator.PhotoUrl" alt="User Avatar" style="height: 100px;" /><br />
+            @*<div style="padding-left: 50px;">Photo</div>*@
+        </div>
+        <h3>
+            <span>@Html.ActionLink(@post.Title, "PostAndComments", "Posts", new { postId = post.Id }, null)</span>
+        </h3>
+        <p>
+            Posted by
+            <span>@Html.ActionLink(@post.Creator.UserName, "Details", "Users", new { username = post.Creator.UserName }, new { @class = "btn-mini qa-tag-link" })</span>
+            on @post.Timespan.ToString("dd/MM/yy HH:mm") in
+            <span>@Html.ActionLink(@post.CategoryName, "CategoryPosts", "Categories", new { categoryId = post.CategoryId }, new { @class = "btn btn-small" })</span>
+        </p>
+        <p>
+            @foreach (var tag in post.Tags)
+            {
+                <span>@Html.ActionLink(@tag.Name, "TagPosts", "Tags", new { tagId = tag.Id }, new { @class = "btn btn-mini" })</span>
+            }
+        </p>
+    </div>
+}

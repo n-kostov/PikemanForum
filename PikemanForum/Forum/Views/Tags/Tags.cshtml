@@ -1,0 +1,40 @@
+﻿@model IList<Forum.ViewModels.TagViewModel>
+<link href="~/Content/qa-style.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Most popular tags";
+}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span9">
+            <h1>@ViewBag.Title</h1>
+            <table class="qa-top-tags-table">
+                <tbody>
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <tr>
+                            <td class="qa-top-tags-count">@Model[i].PostsCount x</td>
+                            <td class="qa-top-tags-label">
+                                @Html.ActionLink(@Model[i].TagName, "TagPosts", "Tags", new { tagId = Model[i].TagId }, new { @class = "btn-mini qa-tag-link" })
+                            </td>
+                            <td class="qa-top-tags-spacer">&nbsp;</td>
+                            <td class="qa-top-tags-count">@Model[i + 10].PostsCount x</td>
+                            <td class="qa-top-tags-label">
+                                @Html.ActionLink(@Model[i + 10].TagName, "TagPosts", "Tags", new { tagId = Model[i + 10].TagId }, new { @class = "btn-mini qa-tag-link" })
+                            </td>
+                            <td class="qa-top-tags-spacer">&nbsp;</td>
+                            <td class="qa-top-tags-count">@Model[i + 20].PostsCount x</td>
+                            <td class="qa-top-tags-label">
+                                @Html.ActionLink(@Model[i + 20].TagName, "TagPosts", "Tags", new { tagId = Model[i + 20].TagId }, new { @class = "btn-mini qa-tag-link" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="span3">
+            @Html.Action("ListCategories", "Home");
+        </div>
+    </div>
+</div>

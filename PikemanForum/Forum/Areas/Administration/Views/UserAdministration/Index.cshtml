@@ -1,0 +1,33 @@
+﻿@using Forum.ViewModels
+@{
+    ViewBag.Title = "Users administration";
+}
+
+@(Html.Kendo().Grid<UserViewModel>()
+    .Name("users-grid")
+    .Columns(columns =>
+        {
+            columns.Bound(col => col.UserName);
+            columns.Bound(col => col.FirstName);
+            columns.Bound(col => col.LastName);
+            columns.Bound(col => col.Email);
+            columns.Command(command =>
+                {
+                    command.Edit();
+                    command.Destroy();
+                });
+            columns.Template(@<text></text>).ClientTemplate("<a href='" + Url.Action("EditRoles", "UserAdministration") + "?username=#=UserName#'>Edit Roles</a>");
+        })
+                    //.ToolBar(toolbar => { toolbar.Create(); })
+                    .Editable(conf => conf.Mode(GridEditMode.InLine))
+                    .Pageable()
+                    .Sortable()
+                    .DataSource(source =>
+                        source.Ajax()
+                        .PageSize(5)
+                        .Model(model => model.Id(x => x.Id))
+                        .Read(read => read.Action("Read", "UserAdministration"))
+                        .Update(update => update.Action("Edit", "UserAdministration"))
+                        .Create(create => create.Action("Create", "UserAdministration"))
+                        .Destroy(destroy => destroy.Action("Delete", "UserAdministration"))
+                        ))

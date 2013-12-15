@@ -1,0 +1,24 @@
+﻿@using System.Web.UI.WebControls
+@using PagedList;
+@using PagedList.Mvc
+@model IPagedList<Forum.ViewModels.PostCategoryUserViewModel>
+@{
+
+    var tagName = ViewBag.CurrentTagName;
+    var tagId = ViewBag.CurrentTagId;
+}
+
+@Html.Partial("_SearchForm")
+
+<h3>Results for: @tagName with Id: @tagId</h3>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span9" id="update-ajax">
+            @Html.Partial("_HomePagePosts", Model)
+            @Html.PagedListPager(Model, page => Url.Action("TagPosts", "Tags", new { page = page, tagId = tagId }), new PagedListRenderOptions { DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayItemSliceAndTotal = true, UlElementClasses = new[] { "nav" }, ContainerDivClasses = new[] { "navbar clearfix" } })
+        </div>
+        <div class="span3">
+            @Html.Action("ListCategories", "Home");
+        </div>
+    </div>
+</div>
